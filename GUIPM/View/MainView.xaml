@@ -1,0 +1,106 @@
+﻿<UserControl x:Class="GUIPM.MainView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:local="clr-namespace:GUIPM"
+             mc:Ignorable="d"
+             d:DesignHeight="600" d:DesignWidth="400">
+    <UserControl.Resources>
+        <local:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+    </UserControl.Resources>
+    <Grid>
+        <StackPanel Margin="10,0,10,10">
+            <Image HorizontalAlignment="Left" Height="56" Margin="344,10,0,0" VerticalAlignment="Top" Width="100" x:Name="MyImage"/>
+            <ListBox x:Name="optionsList" ItemsSource="{Binding Options}" SelectedItem="{Binding SelectedOption, Mode=TwoWay}" />
+            <Button Content="Select" Command="{Binding SelectOptionCommand}" Margin="0,10,0,10" />
+            <TextBlock Text="{Binding CurrentTask}" Margin="0,10,0,10" />
+
+            <!-- URL Input for Scraping -->
+            <StackPanel Orientation="Horizontal" Visibility="{Binding IsUrlInputVisible, Converter={StaticResource BooleanToVisibilityConverter}}">
+                <TextBox Width="200" Text="{Binding UrlToScrape, UpdateSourceTrigger=PropertyChanged}" />
+                <Button Content="Scrape" Command="{Binding ScrapeCommand}" Margin="10,0,0,0" />
+            </StackPanel>
+
+            <!-- Input for Searching Reviews -->
+            <StackPanel Orientation="Horizontal" Visibility="{Binding IsSearchInputVisible, Converter={StaticResource BooleanToVisibilityConverter}}">
+                <TextBox Width="200" Text="{Binding SearchKeyword, UpdateSourceTrigger=PropertyChanged}" />
+                <Button Content="Search" Command="{Binding SearchCommand}" Margin="10,0,0,0" />
+            </StackPanel>
+
+            <!-- Button for Categorizing Reviews -->
+            <StackPanel Orientation="Horizontal" Visibility="{Binding IsCategorizeInputVisible, Converter={StaticResource BooleanToVisibilityConverter}}">
+                <Button Content="Categorize" Command="{Binding CategorizeCommand}" Margin="10,0,0,0" />
+            </StackPanel>
+
+            <!-- Sorting Buttons -->
+            <Button Content="Sort All Reviews" Command="{Binding SortAllReviewsCommand}" Margin="10,0,0,0" />
+            <Button Content="Sort Positive Reviews" Command="{Binding SortPositiveReviewsCommand}" Margin="10,0,0,0" />
+            <Button Content="Sort Negative Reviews" Command="{Binding SortNegativeReviewsCommand}" Margin="10,0,0,0" />
+
+            <!-- Printing Buttons -->
+            <TextBlock Text="Print All Reviews:" FontWeight="Bold" Margin="0,10,0,0" />
+            <StackPanel Orientation="Horizontal">
+                <Button Content="To Txt" Command="{Binding PrintAllReviewsToTxtCommand}" Margin="10,0,0,0" />
+                <Button Content="To Csv" Command="{Binding PrintAllReviewsToCsvCommand}" Margin="10,0,0,0" />
+                <Button Content="To Excel" Command="{Binding PrintAllReviewsToExcelCommand}" Margin="10,0,0,0" />
+            </StackPanel>
+
+            <TextBlock Text="Print Positive Reviews:" FontWeight="Bold" Margin="0,10,0,0" />
+            <StackPanel Orientation="Horizontal">
+                <Button Content="To Txt" Command="{Binding PrintPositiveReviewsToTxtCommand}" Margin="10,0,0,0" />
+                <Button Content="To Csv" Command="{Binding PrintPositiveReviewsToCsvCommand}" Margin="10,0,0,0" />
+                <Button Content="To Excel" Command="{Binding PrintPositiveReviewsToExcelCommand}" Margin="10,0,0,0" />
+            </StackPanel>
+
+            <TextBlock Text="Print Negative Reviews:" FontWeight="Bold" Margin="0,10,0,0" />
+            <StackPanel Orientation="Horizontal">
+                <Button Content="To Txt" Command="{Binding PrintNegativeReviewsToTxtCommand}" Margin="10,0,0,0" />
+                <Button Content="To Csv" Command="{Binding PrintNegativeReviewsToCsvCommand}" Margin="10,0,0,0" />
+                <Button Content="To Excel" Command="{Binding PrintNegativeReviewsToExcelCommand}" Margin="10,0,0,0" />
+            </StackPanel>
+
+            <!-- Search for Keywords -->
+            <TextBlock Text="Search for Keyword:" FontWeight="Bold" Margin="0,10,0,0" />
+            <StackPanel Orientation="Horizontal">
+                <TextBox Width="200" Text="{Binding KeywordToSearch, UpdateSourceTrigger=PropertyChanged}" />
+                <Button Content="Search" Command="{Binding SearchKeywordCommand}" Margin="10,0,0,0" />
+            </StackPanel>
+
+            <!-- Exit Application -->
+            <Button Content="Exit" Command="{Binding ExitCommand}" Margin="10,0,0,0" />
+
+            <!-- Display Positive Reviews -->
+            <TextBlock Text="Positive Reviews:" FontWeight="Bold" Margin="0,10,0,0" />
+            <ListBox ItemsSource="{Binding PositiveReviews}" Margin="0,10,0,0">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel>
+                            <TextBlock Text="{Binding Author}" FontWeight="Bold" />
+                            <TextBlock Text="{Binding Title}" FontStyle="Italic" />
+                            <TextBlock Text="{Binding Content}" />
+                            <TextBlock Text="{Binding StarRating}" />
+                            <TextBlock Text="{Binding Date}" />
+                        </StackPanel>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+
+            <!-- Display Negative Reviews -->
+            <TextBlock Text="Negative Reviews:" FontWeight="Bold" Margin="0,10,0,0" />
+            <ListBox ItemsSource="{Binding NegativeReviews}" Margin="0,10,0,0">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel>
+                            <TextBlock Text="{Binding Author}" FontWeight="Bold" />
+                            <TextBlock Text="{Binding Title}" FontStyle="Italic" />
+                            <TextBlock Text="{Binding Content}" />
+                            <TextBlock Text="{Binding StarRating}" />
+                            <TextBlock Text="{Binding Date}" />
+                        </StackPanel>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </StackPanel>
+    </Grid>
+</UserControl>
